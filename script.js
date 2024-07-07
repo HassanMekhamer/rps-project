@@ -16,6 +16,10 @@ let rockButton = document.querySelector(".rock")
 let paperButton = document.querySelector(".paper")
 let scissorsButton = document.querySelector('.scissors')
 
+// let choice = document.querySelectorAll(".choice")
+
+
+
 rockButton.addEventListener("click", () => {
     playRound("rock")
 });
@@ -28,6 +32,10 @@ paperButton.addEventListener("click", () => {
     playRound("paper");
 });
 
+
+
+
+
 let roundResult = document.createElement("p")
 let scores = document.createElement("p");
 let resultDiv = document.querySelector(".result");
@@ -35,34 +43,46 @@ let resultDiv = document.querySelector(".result");
 
 
 function playRound(human) {
+
+
     let computerChoice = getComputerChoices();
 
-    if ((computerChoice == "rock" && human == "scissors") ||
-        (computerChoice == "scissors" && human == "paper") ||
-        (computerChoice == "paper" && human == "rock")) {
-        roundResult.textContent = `You lose ${human} loses to ${computerChoice}`
-        computerScore++
-        scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}`
-    } else if ((human == "rock" && computerChoice == "scissors") ||
-        (human == "scissors" && computerChoice == "paper") ||
-        (human == "paper" && computerChoice == "rock")) {
-        roundResult.textContent = `You Win! ${human} beats ${computerChoice}`
-        humanScore++
-        scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}`
-    } else {
-        roundResult.textContent = `Draw! ${human} does not beat ${computerChoice}`
-        scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}`
-    }
-
-    if (humanScore == 5) {
+    if (humanScore === 5) {
         scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}. YOU WON!`
-    } else if (computerScore == 5) {
+        rockButton.removeEventListener("click", () => { playRound("rock") });
+        scissorsButton.removeEventListener("click", () => { playRound("scissors") });
+        paperButton.removeEventListener("click", () => { playRound("paper"); });
+    } else if (computerScore === 5) {
         scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}. You lost:(`
-    }
-    resultDiv.appendChild(roundResult)
-    resultDiv.appendChild(scores)
+        rockButton.removeEventListener("click", () => { playRound("rock") });
+        scissorsButton.removeEventListener("click", () => { playRound("scissors") });
+        paperButton.removeEventListener("click", () => { playRound("paper"); });
+    } else {
+        if ((computerChoice == "rock" && human == "scissors") ||
+            (computerChoice == "scissors" && human == "paper") ||
+            (computerChoice == "paper" && human == "rock")) {
+            roundResult.textContent = `You lose this round! ${human} loses to ${computerChoice}`
+            computerScore++
+            scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}`
+        } else if ((human == "rock" && computerChoice == "scissors") ||
+            (human == "scissors" && computerChoice == "paper") ||
+            (human == "paper" && computerChoice == "rock")) {
+            roundResult.textContent = `You Win this round! ${human} beats ${computerChoice}`
+            humanScore++
+            scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}`
+        } else {
+            roundResult.textContent = `Draw! ${human} does not beat ${computerChoice}`
+            scores.textContent = `Your score: ${humanScore}, Computer Score: ${computerScore}`
+        }
+        resultDiv.appendChild(roundResult)
+        resultDiv.appendChild(scores)
 
+    }
 }
+
+
+
+
 
 
 let button = document.querySelector(".play");
